@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Mvc;
  using Otus.Teaching.Pcf.ReceivingFromPartner.Core.Abstractions.Repositories;
  using Otus.Teaching.Pcf.ReceivingFromPartner.Core.Domain;
  using Otus.Teaching.Pcf.ReceivingFromPartner.WebHost.Mappers;
+using Otus.Teaching.Pcf.ReceivingFromPartner.Core.Abstractions.Services;
+using Otus.Teaching.Pcf.ReceivingFromPartner.Integration.Services;
+using Otus.Teaching.Pcf.ReceivingFromPartner.Integration.Dto;
 
  namespace Otus.Teaching.Pcf.ReceivingFromPartner.WebHost.Controllers
 {
@@ -23,19 +26,22 @@ using Microsoft.AspNetCore.Mvc;
         private readonly IRepository<Preference> _preferencesRepository;
         private readonly INotificationGateway _notificationGateway;
         private readonly IGivingPromoCodeToCustomerGateway _givingPromoCodeToCustomerGateway;
-        private readonly IAdministrationGateway _administrationGateway;
+        //private readonly IAdministrationGateway _administrationGateway;
+        private readonly IMessageService _messageService;
 
         public PartnersController(IRepository<Partner> partnersRepository,
             IRepository<Preference> preferencesRepository, 
             INotificationGateway notificationGateway,
             IGivingPromoCodeToCustomerGateway givingPromoCodeToCustomerGateway,
-            IAdministrationGateway administrationGateway)
+            //IAdministrationGateway administrationGateway,
+            IMessageService messageService)
         {
             _partnersRepository = partnersRepository;
             _preferencesRepository = preferencesRepository;
             _notificationGateway = notificationGateway;
             _givingPromoCodeToCustomerGateway = givingPromoCodeToCustomerGateway;
-            _administrationGateway = administrationGateway;
+            //_administrationGateway = administrationGateway;
+            _messageService = messageService;
         }
 
         /// <summary>
@@ -331,15 +337,26 @@ using Microsoft.AspNetCore.Mvc;
             await _partnersRepository.UpdateAsync(partner);
             
             //TODO: Чтобы информация о том, что промокод был выдан парнером была отправлена
-            //в микросервис рассылки клиентам нужно либо вызвать его API, либо отправить событие в очередь
+            //в микросервис рассылки клиентам нужно либо вызвать его API, либо отправить событие в очередь - не менял
             await _givingPromoCodeToCustomerGateway.GivePromoCodeToCustomer(promoCode);
 
             //TODO: Чтобы информация о том, что промокод был выдан парнером была отправлена
-            //в микросервис администрирования нужно либо вызвать его API, либо отправить событие в очередь
-
+            //в микросервис администрирования нужно либо вызвать его API, либо отправить событие в очередь задание N1 - 7 баллов
+            //Отправляем в Otus.Teaching.Pcf.Administration весь промокод, там используем только его id.
+            var promocodeDto = new GivePromoCodeToCustomerDto()
+            {
+                PartnerId = promoCode.Partner.Id,
+                BeginDate = promoCode.BeginDate.ToShortDateString(),
+                EndDate = promoCode.EndDate.ToShortDateString(),
+                PreferenceId = promoCode.PreferenceId,
+                PromoCode = promoCode.Code,
+                ServiceInfo = promoCode.ServiceInfo,
+                PartnerManagerId = promoCode.PartnerManagerId
+            };
             if (request.PartnerManagerId.HasValue)
             {
-                await _administrationGateway.NotifyAdminAboutPartnerManagerPromoCode(request.PartnerManagerId.Value);   
+                await _messageService.PublishMessage(promocodeDto);
+                //await _administrationGateway.NotifyAdminAboutPartnerManagerPromoCode(request.PartnerManagerId.Value);   
             }
 
             return CreatedAtAction(nameof(GetPartnerPromoCodeAsync), 

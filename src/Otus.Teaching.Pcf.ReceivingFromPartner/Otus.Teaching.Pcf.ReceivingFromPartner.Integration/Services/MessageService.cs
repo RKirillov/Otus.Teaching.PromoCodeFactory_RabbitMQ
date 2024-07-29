@@ -28,7 +28,7 @@ namespace Otus.Teaching.Pcf.ReceivingFromPartner.Integration.Services
             if (con.IsOpen)
             {
                 using var channel = con.CreateModel();
-
+                //объявляю обменник
                 channel.ExchangeDeclare(
                     exchange: Exchange,
                     type: ExchangeType.Direct,
@@ -46,9 +46,9 @@ namespace Otus.Teaching.Pcf.ReceivingFromPartner.Integration.Services
                 var bytes = Encoding.UTF8.GetBytes(body);
 
                 channel.BasicPublish(
-                    exchange: Exchange,
-                    routingKey: RoutingKey,
-                    body: bytes);
+                    exchange: Exchange,//exchange: _exchangeName, - наименование обменника, может быть несколько
+                    routingKey: RoutingKey,//маршрутный ключ
+                    body: bytes);//содержимое сообщения
             }
             return Task.CompletedTask;
         }
