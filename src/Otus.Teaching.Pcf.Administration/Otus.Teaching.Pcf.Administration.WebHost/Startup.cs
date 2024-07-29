@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Castle.Core.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,8 +8,8 @@ using Otus.Teaching.Pcf.Administration.Core.Abstractions.Repositories;
 using Otus.Teaching.Pcf.Administration.DataAccess;
 using Otus.Teaching.Pcf.Administration.DataAccess.Data;
 using Otus.Teaching.Pcf.Administration.DataAccess.Repositories;
-using Otus.Teaching.Pcf.Administration.Core.Domain.Administration;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
+using Otus.Teaching.Pcf.Administration.DataAccess.HostedServices;
 
 namespace Otus.Teaching.Pcf.Administration.WebHost
 {
@@ -43,7 +37,7 @@ namespace Otus.Teaching.Pcf.Administration.WebHost
                 x.UseSnakeCaseNamingConvention();
                 x.UseLazyLoadingProxies();
             });
-
+            services.AddHostedService<PromocodeConsumerService>();
             services.AddOpenApiDocument(options =>
             {
                 options.Title = "PromoCode Factory Administration API Doc";

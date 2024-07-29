@@ -1,6 +1,7 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
-
+#https://habr.com/ru/companies/infobox/articles/240623/
+#EXPOSE 8080
 # copy csproj and restore as distinct layers
 COPY *.sln .
 COPY */*.csproj ./
@@ -12,7 +13,7 @@ COPY . ./aspnetapp
 WORKDIR /app/aspnetapp
 RUN dotnet publish -c Release -o out
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/aspnetapp/out ./
 ENTRYPOINT ["dotnet", "Otus.Teaching.Pcf.Administration.WebHost.dll"]
