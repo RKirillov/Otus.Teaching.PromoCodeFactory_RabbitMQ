@@ -343,7 +343,7 @@ using Otus.Teaching.Pcf.ReceivingFromPartner.Integration.Dto;
             //TODO: Чтобы информация о том, что промокод был выдан парнером была отправлена
             //в микросервис администрирования нужно либо вызвать его API, либо отправить событие в очередь задание N1 - 7 баллов
             //Отправляем в Otus.Teaching.Pcf.Administration весь промокод, там используем только его id.
-            var promocodeDto = new GivePromoCodeToCustomerDto()
+            var promocode = new GivePromoCodeToCustomerDto()
             {
                 PartnerId = promoCode.Partner.Id,
                 BeginDate = promoCode.BeginDate.ToShortDateString(),
@@ -355,7 +355,7 @@ using Otus.Teaching.Pcf.ReceivingFromPartner.Integration.Dto;
             };
             if (request.PartnerManagerId.HasValue)
             {
-                await _messageService.PublishMessage(promocodeDto);
+                await _messageService.PublishMessage(promocode);
                 //await _administrationGateway.NotifyAdminAboutPartnerManagerPromoCode(request.PartnerManagerId.Value);   
             }
 
