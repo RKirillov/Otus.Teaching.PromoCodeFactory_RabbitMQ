@@ -10,6 +10,7 @@ using Otus.Teaching.Pcf.Administration.DataAccess.Data;
 using Otus.Teaching.Pcf.Administration.DataAccess.Repositories;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 using Otus.Teaching.Pcf.Administration.DataAccess.HostedServices;
+using Otus.Teaching.Pcf.Administration.DataAccess.Options;
 
 namespace Otus.Teaching.Pcf.Administration.WebHost
 {
@@ -26,6 +27,8 @@ namespace Otus.Teaching.Pcf.Administration.WebHost
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //// создание объекта BusConnectOptions по ключам из конфигурации
+            services.Configure<BusConnectOptions>(Configuration.GetSection(nameof(BusConnectOptions)));
             services.AddControllers().AddMvcOptions(x=> 
                 x.SuppressAsyncSuffixInActionNames = false);
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
