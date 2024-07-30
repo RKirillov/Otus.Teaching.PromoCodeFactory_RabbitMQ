@@ -11,6 +11,7 @@ using Otus.Teaching.Pcf.Administration.DataAccess.Repositories;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 using Otus.Teaching.Pcf.Administration.DataAccess.HostedServices;
 using Otus.Teaching.Pcf.Administration.Core.Options;
+using System;
 
 namespace Otus.Teaching.Pcf.Administration.WebHost
 {
@@ -27,6 +28,7 @@ namespace Otus.Teaching.Pcf.Administration.WebHost
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             //// создание объекта BusConnectOptions по ключам из конфигурации
             services.Configure<BusConnectOptions>(Configuration.GetSection(nameof(BusConnectOptions)));
             services.AddControllers().AddMvcOptions(x=> 
