@@ -12,6 +12,8 @@ using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 using Otus.Teaching.Pcf.Administration.DataAccess.HostedServices;
 using Otus.Teaching.Pcf.Administration.Core.Options;
 using System;
+using Otus.Teaching.Pcf.Administration.Core.Abstractions.Services;
+using Otus.Teaching.Pcf.Administration.DataAccess.Services;
 
 namespace Otus.Teaching.Pcf.Administration.WebHost
 {
@@ -35,6 +37,7 @@ namespace Otus.Teaching.Pcf.Administration.WebHost
                 x.SuppressAsyncSuffixInActionNames = false);
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbInitializer, EfDbInitializer>();
+            services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddDbContext<DataContext>(x =>
             {
                 //x.UseSqlite("Filename=PromocodeFactoryAdministrationDb.sqlite");

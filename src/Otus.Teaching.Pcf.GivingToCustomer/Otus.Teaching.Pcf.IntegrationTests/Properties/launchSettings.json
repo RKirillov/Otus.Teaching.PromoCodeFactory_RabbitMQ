@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Otus.Teaching.Pcf.GivingToCustomer.IntegrationTests": {
+    "Otus.Teaching.Pcf.IntegrationTests": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

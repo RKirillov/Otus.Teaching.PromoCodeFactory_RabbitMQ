@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Otus.Teaching.Pcf.GivingToCustomer.Core.Abstractions.Gateways;
 
-namespace Otus.Teaching.Pcf.GivingToCustomer.IntegrationTests.Fakes
+namespace Otus.Teaching.Pcf.IntegrationTests.Fakes
 {
     public class FakeNotificationGateway
         : INotificationGateway

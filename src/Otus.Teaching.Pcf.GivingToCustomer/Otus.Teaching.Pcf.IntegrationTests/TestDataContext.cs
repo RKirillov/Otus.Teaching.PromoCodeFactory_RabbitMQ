@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Otus.Teaching.Pcf.GivingToCustomer.DataAccess;
 
-namespace Otus.Teaching.Pcf.GivingToCustomer.IntegrationTests
+namespace Otus.Teaching.Pcf.IntegrationTests
 {
     public class TestDataContext
         : DataContext

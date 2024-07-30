@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Otus.Teaching.Pcf.GivingToCustomer.Core.Domain;
 
-namespace Otus.Teaching.Pcf.GivingToCustomer.IntegrationTests.Data
+namespace Otus.Teaching.Pcf.IntegrationTests.Data
 {
     public static class TestDataFactory
     {

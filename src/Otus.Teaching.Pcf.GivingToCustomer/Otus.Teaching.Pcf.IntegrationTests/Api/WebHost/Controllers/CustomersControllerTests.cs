@@ -9,12 +9,12 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Otus.Teaching.Pcf.GivingToCustomer.Core.Abstractions.Gateways;
-using Otus.Teaching.Pcf.GivingToCustomer.IntegrationTests.Fakes;
+using Otus.Teaching.Pcf.IntegrationTests.Fakes;
 using Otus.Teaching.Pcf.GivingToCustomer.WebHost;
 using Otus.Teaching.Pcf.GivingToCustomer.WebHost.Models;
 using Xunit;
 
-namespace Otus.Teaching.Pcf.GivingToCustomer.IntegrationTests.Api.WebHost.Controllers
+namespace Otus.Teaching.Pcf.IntegrationTests.Api.WebHost.Controllers
 {
 
     public class CustomersControllerTests

@@ -47,10 +47,10 @@ namespace Otus.Teaching.Pcf.ReceivingFromPartner.WebHost
                 c.BaseAddress = new Uri(Configuration["IntegrationSettings:GivingToCustomerApiUrl"]);
             });
             
-            services.AddHttpClient<IAdministrationGateway,AdministrationGateway>(c =>
+/*            services.AddHttpClient<IAdministrationGateway,AdministrationGateway>(c =>
             {
                 c.BaseAddress = new Uri(Configuration["IntegrationSettings:AdministrationApiUrl"]);
-            });
+            });*/
             
             services.AddDbContext<DataContext>(x =>
             {

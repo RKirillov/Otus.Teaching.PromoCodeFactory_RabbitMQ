@@ -8,9 +8,9 @@ using Microsoft.Extensions.Logging;
 using Otus.Teaching.Pcf.GivingToCustomer.Core.Abstractions.Gateways;
 using Otus.Teaching.Pcf.GivingToCustomer.DataAccess;
 using Otus.Teaching.Pcf.GivingToCustomer.Integration;
-using Otus.Teaching.Pcf.GivingToCustomer.IntegrationTests.Data;
+using Otus.Teaching.Pcf.IntegrationTests.Data;
 
-namespace Otus.Teaching.Pcf.GivingToCustomer.IntegrationTests
+namespace Otus.Teaching.Pcf.IntegrationTests
 {
     public class TestWebApplicationFactory<TStartup>
         : WebApplicationFactory<TStartup> where TStartup: class

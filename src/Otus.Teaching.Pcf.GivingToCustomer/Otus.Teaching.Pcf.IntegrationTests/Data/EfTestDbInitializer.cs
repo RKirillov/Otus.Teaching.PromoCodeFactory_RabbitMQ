@@ -1,7 +1,7 @@
 ﻿using Otus.Teaching.Pcf.GivingToCustomer.DataAccess;
 using Otus.Teaching.Pcf.GivingToCustomer.DataAccess.Data;
 
-namespace Otus.Teaching.Pcf.GivingToCustomer.IntegrationTests.Data
+namespace Otus.Teaching.Pcf.IntegrationTests.Data
 {
     public class EfTestDbInitializer
         : IDbInitializer

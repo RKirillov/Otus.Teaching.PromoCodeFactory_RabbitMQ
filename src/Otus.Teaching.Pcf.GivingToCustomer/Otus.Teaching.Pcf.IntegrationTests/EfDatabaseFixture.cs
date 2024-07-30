@@ -1,7 +1,7 @@
 ﻿using System;
-using Otus.Teaching.Pcf.GivingToCustomer.IntegrationTests.Data;
+using Otus.Teaching.Pcf.IntegrationTests.Data;
 
-namespace Otus.Teaching.Pcf.GivingToCustomer.IntegrationTests
+namespace Otus.Teaching.Pcf.IntegrationTests
 {
     public class EfDatabaseFixture: IDisposable
     {

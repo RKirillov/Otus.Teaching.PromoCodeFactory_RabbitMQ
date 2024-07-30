@@ -35,7 +35,7 @@ namespace Otus.Teaching.Pcf.GivingToCustomer.WebHost
         {
             //режим совместимости  See the Npgsql.EnableLegacyTimestampBehavior AppContext switch to enable legacy behavior. System.InvalidCastException: Cannot write DateTime with Kind=Local to PostgreSQL type 'timestamp with time zone', only UTC is supported.
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-            services.Configure<BusConnectOptions>(Configuration.GetSection(nameof(BusConnectOptions)));
+            //services.Configure<BusConnectOptions>(Configuration.GetSection(nameof(BusConnectOptions)));
             services.AddControllers().AddMvcOptions(x=> 
                 x.SuppressAsyncSuffixInActionNames = false);
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));

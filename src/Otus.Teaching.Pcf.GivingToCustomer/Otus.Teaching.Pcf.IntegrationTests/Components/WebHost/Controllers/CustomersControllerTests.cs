@@ -9,7 +9,7 @@ using Otus.Teaching.Pcf.GivingToCustomer.WebHost.Controllers;
 using Otus.Teaching.Pcf.GivingToCustomer.WebHost.Models;
 using Xunit;
 
-namespace Otus.Teaching.Pcf.GivingToCustomer.IntegrationTests.Components.WebHost.Controllers
+namespace Otus.Teaching.Pcf.IntegrationTests.Components.WebHost.Controllers
 {
     [Collection(EfDatabaseCollection.DbCollection)]
     public class CustomersControllerTests: IClassFixture<EfDatabaseFixture>

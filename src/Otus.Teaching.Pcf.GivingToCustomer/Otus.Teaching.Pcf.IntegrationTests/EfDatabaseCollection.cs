@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace Otus.Teaching.Pcf.GivingToCustomer.IntegrationTests
+namespace Otus.Teaching.Pcf.IntegrationTests
 {
     [CollectionDefinition(DbCollection)]
     public class EfDatabaseCollection: ICollectionFixture<EfDatabaseFixture>
