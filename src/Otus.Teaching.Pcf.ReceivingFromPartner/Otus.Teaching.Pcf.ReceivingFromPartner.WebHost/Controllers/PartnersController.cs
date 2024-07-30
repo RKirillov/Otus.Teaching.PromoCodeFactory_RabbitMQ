@@ -27,14 +27,14 @@ using Otus.Teaching.Pcf.ReceivingFromPartner.Integration.Dto;
         private readonly INotificationGateway _notificationGateway;
         private readonly IGivingPromoCodeToCustomerGateway _givingPromoCodeToCustomerGateway;
         //private readonly IAdministrationGateway _administrationGateway;
-        private readonly IMessageService _messageService;
+        private readonly IProducerMessageService _messageService;
 
         public PartnersController(IRepository<Partner> partnersRepository,
             IRepository<Preference> preferencesRepository, 
             INotificationGateway notificationGateway,
             IGivingPromoCodeToCustomerGateway givingPromoCodeToCustomerGateway,
             //IAdministrationGateway administrationGateway,
-            IMessageService messageService)
+            IProducerMessageService messageService)
         {
             _partnersRepository = partnersRepository;
             _preferencesRepository = preferencesRepository;

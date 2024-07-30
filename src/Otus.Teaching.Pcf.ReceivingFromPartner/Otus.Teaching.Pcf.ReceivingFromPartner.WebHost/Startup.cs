@@ -32,7 +32,6 @@ namespace Otus.Teaching.Pcf.ReceivingFromPartner.WebHost
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             services.Configure<BusConnectOptions>(Configuration.GetSection(nameof(BusConnectOptions)));
 
             services.AddControllers().AddMvcOptions(x=> 
@@ -40,18 +39,18 @@ namespace Otus.Teaching.Pcf.ReceivingFromPartner.WebHost
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<INotificationGateway, NotificationGateway>();
             services.AddScoped<IDbInitializer, EfDbInitializer>();
-            services.AddTransient<IMessageService, MessageService>();
+            services.AddTransient<IProducerMessageService, ProducerMessageService>();
 
-            services.AddHttpClient<IGivingPromoCodeToCustomerGateway,GivingPromoCodeToCustomerGateway>(c =>
+/*            services.AddHttpClient<IGivingPromoCodeToCustomerGateway,GivingPromoCodeToCustomerGateway>(c =>
             {
                 c.BaseAddress = new Uri(Configuration["IntegrationSettings:GivingToCustomerApiUrl"]);
-            });
-            
-/*            services.AddHttpClient<IAdministrationGateway,AdministrationGateway>(c =>
-            {
-                c.BaseAddress = new Uri(Configuration["IntegrationSettings:AdministrationApiUrl"]);
             });*/
-            
+
+            /*            services.AddHttpClient<IAdministrationGateway,AdministrationGateway>(c =>
+                        {
+                            c.BaseAddress = new Uri(Configuration["IntegrationSettings:AdministrationApiUrl"]);
+                        });*/
+
             services.AddDbContext<DataContext>(x =>
             {
                 //x.UseSqlite("Filename=PromocodeFactoryReceivingFromPartnerDb.sqlite");

@@ -2,7 +2,7 @@
 
 namespace Otus.Teaching.Pcf.ReceivingFromPartner.Core.Abstractions.Services
 {
-    public interface IMessageService
+    public interface IProducerMessageService
     {
         Task PublishMessage<T>(T message);
     }

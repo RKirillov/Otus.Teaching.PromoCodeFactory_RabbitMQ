@@ -7,13 +7,13 @@ using Otus.Teaching.Pcf.ReceivingFromPartner.Core.Abstractions.Services;
 using Otus.Teaching.Pcf.ReceivingFromPartner.Core;
 namespace Otus.Teaching.Pcf.ReceivingFromPartner.Integration.Services
 {
-    public class MessageService : IMessageService
+    public class ProducerMessageService : IProducerMessageService
     {
         private const string Exchange = "Pcf.ReceivingFromPartner.Promocodes";
         private const string RoutingKey = "Pcf.ReceivingFromPartner.Promocode";
 
         private readonly ConnectionFactory _connectionFactory;
-        public MessageService(IOptions<BusConnectOptions> busOptions)
+        public ProducerMessageService(IOptions<BusConnectOptions> busOptions)
         {
             _connectionFactory = new()
             {

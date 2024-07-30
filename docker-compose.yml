@@ -5,9 +5,9 @@ services:
     build: src/Otus.Teaching.Pcf.Administration/
     container_name: 'promocode-factory-administration-api'
     #означает, что docker-compose перезапустит контейнер, если тот вдруг остановится (например, программа закончит выполнение штатно или аварийно).
-    restart: always
+    #restart: always
     ports: #"[host:]container[/protocol]"
-      - "8091:8080"
+      - "8091:80"
     environment:
       - "ConnectionStrings:PromocodeFactoryAdministrationDb=Host=promocode-factory-administration-db;Database=promocode_factory_administration_db;Username=postgres;Password=docker"          
     depends_on: 
@@ -27,9 +27,9 @@ services:
   promocode-factory-receiving-from-partner-api:
     build: src/Otus.Teaching.Pcf.ReceivingFromPartner/
     container_name: 'promocode-factory-receiving-from-partner-api'
-    restart: always
+    #restart: always
     ports:
-      - "8092:8080"
+      - "8092:80"
     environment:
       - "ConnectionStrings:PromocodeFactoryReceivingFromPartnerDb=Host=promocode-factory-receiving-from-partner-db;Database=promocode_factory_receiving_from_partner_db;Username=postgres;Password=docker"
       - "IntegrationSettings:GivingToCustomerApiUrl=http://promocode-factory-giving-to-customer-api"    
@@ -53,9 +53,9 @@ services:
   promocode-factory-giving-to-customer-api:
     build: src/Otus.Teaching.Pcf.GivingToCustomer/
     container_name: 'promocode-factory-giving-to-customer-api'
-    restart: always
+    #restart: always
     ports:
-      - "8093:8080"
+      - "8093:80"
     environment:
       - "ConnectionStrings:PromocodeFactoryGivingToCustomerDb=Host=promocode-factory-giving-to-customer-db;Database=promocode_factory_giving_to_customer_db;Username=postgres;Password=docker"          
     depends_on: 
@@ -80,8 +80,8 @@ services:
       - "5672:5672"  # для подключения клиентов RabbitMQ
       - "15672:15672"  # для подключения к веб-интерфейсу управления
     environment:
-      RABBITMQ_DEFAULT_USER: user  # замените на ваше имя пользователя
-      RABBITMQ_DEFAULT_PASS: password  # замените на ваш пароль
+      RABBITMQ_DEFAULT_USER: rmuser  # замените на ваше имя пользователя
+      RABBITMQ_DEFAULT_PASS: docker  # замените на ваш пароль
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
       
