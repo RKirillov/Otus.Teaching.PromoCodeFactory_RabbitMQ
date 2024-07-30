@@ -10,7 +10,7 @@ using Otus.Teaching.Pcf.Administration.DataAccess.Data;
 using Otus.Teaching.Pcf.Administration.DataAccess.Repositories;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 using Otus.Teaching.Pcf.Administration.DataAccess.HostedServices;
-using Otus.Teaching.Pcf.Administration.DataAccess.Options;
+using Otus.Teaching.Pcf.Administration.Core.Options;
 
 namespace Otus.Teaching.Pcf.Administration.WebHost
 {

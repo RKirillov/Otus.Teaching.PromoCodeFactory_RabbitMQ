@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Otus.Teaching.Pcf.ReceivingFromPartner.Core.Abstractions.Services;
-using Otus.Teaching.Pcf.ReceivingFromPartner.Core.Abstractions;
+using Otus.Teaching.Pcf.ReceivingFromPartner.Core;
 namespace Otus.Teaching.Pcf.ReceivingFromPartner.Integration.Services
 {
     public class MessageService : IMessageService

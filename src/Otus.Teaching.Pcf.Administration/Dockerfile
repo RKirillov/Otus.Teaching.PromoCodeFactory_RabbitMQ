@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
-#https://habr.com/ru/companies/infobox/articles/240623/
-#EXPOSE 8080
+# https://habr.com/ru/companies/infobox/articles/240623/
+# EXPOSE 8080
 # copy csproj and restore as distinct layers
 COPY *.sln .
 COPY */*.csproj ./

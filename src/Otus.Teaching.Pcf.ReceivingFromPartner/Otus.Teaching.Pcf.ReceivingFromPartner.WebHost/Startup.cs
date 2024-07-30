@@ -15,6 +15,7 @@ using Otus.Teaching.Pcf.ReceivingFromPartner.Integration;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 using Otus.Teaching.Pcf.ReceivingFromPartner.Integration.Services;
 using Otus.Teaching.Pcf.ReceivingFromPartner.Core.Abstractions;
+using Otus.Teaching.Pcf.ReceivingFromPartner.Core;
 
 namespace Otus.Teaching.Pcf.ReceivingFromPartner.WebHost
 {
@@ -45,10 +46,10 @@ namespace Otus.Teaching.Pcf.ReceivingFromPartner.WebHost
                 c.BaseAddress = new Uri(Configuration["IntegrationSettings:GivingToCustomerApiUrl"]);
             });
             
-/*            services.AddHttpClient<IAdministrationGateway,AdministrationGateway>(c =>
+            services.AddHttpClient<IAdministrationGateway,AdministrationGateway>(c =>
             {
                 c.BaseAddress = new Uri(Configuration["IntegrationSettings:AdministrationApiUrl"]);
-            });*/
+            });
             
             services.AddDbContext<DataContext>(x =>
             {

@@ -1,4 +1,4 @@
-﻿namespace Otus.Teaching.Pcf.ReceivingFromPartner.DataAccess
+﻿namespace Otus.Teaching.Pcf.GivingToCustomer.Core
 {
     public class BusConnectOptions
     {

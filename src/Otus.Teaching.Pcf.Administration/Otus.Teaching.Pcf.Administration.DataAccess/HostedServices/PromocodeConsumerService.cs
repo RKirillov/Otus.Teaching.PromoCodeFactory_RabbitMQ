@@ -8,10 +8,10 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using Otus.Teaching.Pcf.Administration.DataAccess.Options;
 using ExchangeType = RabbitMQ.Client.ExchangeType;
 using Otus.Teaching.Pcf.Administration.Core.Domain.Administration;
 using Otus.Teaching.Pcf.Administration.Core.Abstractions.Services;
+using Otus.Teaching.Pcf.Administration.Core.Options;
 
 namespace Otus.Teaching.Pcf.Administration.DataAccess.HostedServices
 {

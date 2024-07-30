@@ -16,6 +16,7 @@ using Otus.Teaching.Pcf.GivingToCustomer.DataAccess.Data;
 using Otus.Teaching.Pcf.GivingToCustomer.DataAccess.Repositories;
 using Otus.Teaching.Pcf.GivingToCustomer.Integration;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
+using Otus.Teaching.Pcf.GivingToCustomer.Core;
 
 namespace Otus.Teaching.Pcf.GivingToCustomer.WebHost
 {

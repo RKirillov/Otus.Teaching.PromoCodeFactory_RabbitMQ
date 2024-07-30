@@ -1,4 +1,4 @@
-﻿namespace Otus.Teaching.Pcf.Administration.DataAccess.Options
+﻿namespace Otus.Teaching.Pcf.Administration.Core.Options
 {
     public class BusConnectOptions
     {
