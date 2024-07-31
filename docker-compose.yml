@@ -5,14 +5,15 @@ services:
     build: src/Otus.Teaching.Pcf.Administration/
     container_name: 'promocode-factory-administration-api'
     #означает, что docker-compose перезапустит контейнер, если тот вдруг остановится (например, программа закончит выполнение штатно или аварийно).
-    restart: on-failure
+    #restart: on-failure
     ports: 
     #"[host:]container[/protocol]"
       - "8091:80"
     environment:
       - "ConnectionStrings:PromocodeFactoryAdministrationDb=Host=promocode-factory-administration-db;Database=promocode_factory_administration_db;Username=postgres;Password=docker"          
     depends_on: 
-      - promocode-factory-administration-db
+      promocode-factory-administration-db:
+        condition: service_healthy
     #networks:
     #  - network
       
@@ -25,6 +26,11 @@ services:
       - 5433:5432
     environment: 
       - POSTGRES_PASSWORD=docker
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     #networks:
     #  - network
   #ReceivingFromPartner Api
