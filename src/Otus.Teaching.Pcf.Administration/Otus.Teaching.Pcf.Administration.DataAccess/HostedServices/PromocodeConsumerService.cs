@@ -31,6 +31,7 @@ namespace Otus.Teaching.Pcf.Administration.DataAccess.HostedServices
         public PromocodeConsumerService(IServiceScopeFactory serviceScopeFactory, IHostApplicationLifetime lifetime,
             IOptions<BusConnectOptions> busOptions)
         {
+            Console.WriteLine("Start Register");
             _serviceScopeFactory = serviceScopeFactory;
             _lifetime = lifetime;
             _lifetime.ApplicationStarted.Register(() => _source.SetResult());
@@ -42,38 +43,46 @@ namespace Otus.Teaching.Pcf.Administration.DataAccess.HostedServices
                 Port = busOptions.Value.Port,
                 VirtualHost = busOptions.Value.VirtualHost
             };
+            Console.WriteLine($"ConnectionFactory UserName-{_connectionFactory.UserName} Password-{_connectionFactory.Password} Port-{_connectionFactory.Port} HostName-{_connectionFactory.HostName} VirtualHost-{_connectionFactory.VirtualHost}");
         }
 
         private IModel InitConsumer()
         {
+            Console.WriteLine("Start init");
             _con = _connectionFactory.CreateConnection();
+            Console.WriteLine($"_con done");
             _channel = _con.CreateModel();
+            Console.WriteLine($"_channel done");
             _channel.QueueDeclare(
                 queue: Queue,
                 exclusive: false,
                 durable: true,
                 autoDelete: false);
-
+            Console.WriteLine($"_channel.QueueDeclare done");
 
             _channel.ExchangeDeclare(
                 exchange: Exchange,
                 type: ExchangeType.Direct,
                 durable: true);
+            Console.WriteLine($"_channel.ExchangeDeclare done");
 
             _channel.QueueBind(
                 queue: Queue,
                 exchange: Exchange,
                 routingKey: RoutingKey);
+            Console.WriteLine($"_channel.QueueBind done");
+
+            Console.WriteLine($"InitConsumer done");
 
             return _channel;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            if (!await WaitForAppStartup(_lifetime, stoppingToken))
+/*            if (!await WaitForAppStartup(_lifetime, stoppingToken))
             {
                 return;
-            }
+            }*/
             var initConsumer = InitConsumer();
             //public event EventHandler<BasicDeliverEventArgs> Received;
             //public delegate void EventHandler<TEventArgs>(object? sender, TEventArgs e);

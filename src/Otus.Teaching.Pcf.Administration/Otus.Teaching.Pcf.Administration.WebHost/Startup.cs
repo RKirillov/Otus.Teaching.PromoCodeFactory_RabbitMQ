@@ -38,12 +38,15 @@ namespace Otus.Teaching.Pcf.Administration.WebHost
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbInitializer, EfDbInitializer>();
             services.AddTransient<IEmployeeService, EmployeeService>();
+            Console.WriteLine("Hello"+ Configuration.GetConnectionString("PromocodeFactoryAdministrationDb"));
             services.AddDbContext<DataContext>(x =>
             {
                 //x.UseSqlite("Filename=PromocodeFactoryAdministrationDb.sqlite");
                 x.UseNpgsql(Configuration.GetConnectionString("PromocodeFactoryAdministrationDb"));
                 x.UseSnakeCaseNamingConvention();
                 x.UseLazyLoadingProxies();
+                x.EnableDetailedErrors();
+                x.EnableSensitiveDataLogging();
             });
             services.AddHostedService<PromocodeConsumerService>();
             services.AddOpenApiDocument(options =>

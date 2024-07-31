@@ -41,10 +41,10 @@ namespace Otus.Teaching.Pcf.ReceivingFromPartner.WebHost
             services.AddScoped<IDbInitializer, EfDbInitializer>();
             services.AddTransient<IProducerMessageService, ProducerMessageService>();
 
-/*            services.AddHttpClient<IGivingPromoCodeToCustomerGateway,GivingPromoCodeToCustomerGateway>(c =>
+           services.AddHttpClient<IGivingPromoCodeToCustomerGateway,GivingPromoCodeToCustomerGateway>(c =>
             {
                 c.BaseAddress = new Uri(Configuration["IntegrationSettings:GivingToCustomerApiUrl"]);
-            });*/
+            });
 
             /*            services.AddHttpClient<IAdministrationGateway,AdministrationGateway>(c =>
                         {

@@ -1,5 +1,6 @@
 ﻿using Otus.Teaching.Pcf.Administration.DataAccess;
 using Otus.Teaching.Pcf.Administration.DataAccess.Data;
+using System;
 
 namespace Otus.Teaching.Pcf.Administration.IntegrationTests.Data
 {
@@ -17,9 +18,10 @@ namespace Otus.Teaching.Pcf.Administration.IntegrationTests.Data
         {
             _dataContext.Database.EnsureDeleted();
             _dataContext.Database.EnsureCreated();
-            
+           
             _dataContext.AddRange(TestDataFactory.Employees);
             _dataContext.SaveChanges();
+            Console.WriteLine("Hello, DataContext saved");
         }
 
         public void CleanDb()
