@@ -5,7 +5,7 @@ services:
     build: src/Otus.Teaching.Pcf.Administration/
     container_name: 'promocode-factory-administration-api'
     #означает, что docker-compose перезапустит контейнер, если тот вдруг остановится (например, программа закончит выполнение штатно или аварийно).
-    #restart: always
+    restart: on-failure
     ports: 
     #"[host:]container[/protocol]"
       - "8091:80"
@@ -13,8 +13,8 @@ services:
       - "ConnectionStrings:PromocodeFactoryAdministrationDb=Host=promocode-factory-administration-db;Database=promocode_factory_administration_db;Username=postgres;Password=docker"          
     depends_on: 
       - promocode-factory-administration-db
-    networks:
-      - network
+    #networks:
+    #  - network
       
   #Administration Db
   promocode-factory-administration-db:
@@ -25,8 +25,8 @@ services:
       - 5433:5432
     environment: 
       - POSTGRES_PASSWORD=docker
-    networks:
-      - network
+    #networks:
+    #  - network
   #ReceivingFromPartner Api
   promocode-factory-receiving-from-partner-api:
     build: src/Otus.Teaching.Pcf.ReceivingFromPartner/
@@ -40,8 +40,8 @@ services:
       #- "IntegrationSettings:AdministrationApiUrl=http://promocode-factory-administration-api"       
     depends_on: 
       - promocode-factory-receiving-from-partner-db
-    networks:
-      - network   
+    #networks:
+    #  - network   
       
   #ReceivingFromPartner Db
   promocode-factory-receiving-from-partner-db:
@@ -54,8 +54,8 @@ services:
       - POSTGRES_PASSWORD=docker
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    networks:
-      - network  
+    #networks:
+    #  - network  
       
   #GivingToCustomer Api
   promocode-factory-giving-to-customer-api:
@@ -68,8 +68,8 @@ services:
       - "ConnectionStrings:PromocodeFactoryGivingToCustomerDb=Host=promocode-factory-giving-to-customer-db;Database=promocode_factory_giving_to_customer_db;Username=postgres;Password=docker"          
     depends_on: 
       - promocode-factory-giving-to-customer-db
-    networks:
-      - network      
+    #networks:
+    #  - network      
       
   #GivingToCustomer Db
   promocode-factory-giving-to-customer-db:
@@ -82,8 +82,8 @@ services:
       - POSTGRES_PASSWORD=docker
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    networks:
-      - network
+    #networks:
+    #  - network
       
   rabbitmq:
     image: rabbitmq:3-management
@@ -96,17 +96,17 @@ services:
       RABBITMQ_DEFAULT_PASS: docker  # замените на ваш пароль
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
-    networks:
-      - network
+    #networks:
+    #  - network
       
 volumes: #Attributes
   rabbitmq_data:
   postgres_data:
   
-networks:
+#networks:
   # Declare our private network.  We must declare one for the magic
   # Docker DNS to work, but otherwise its default settings are fine.
-  network: {}  
+  #network: {}  
 #networks:
 #  default:
 #    name: myLocalNetwork # создана извне: docker network create --driver=bridge myLocalNetwork
