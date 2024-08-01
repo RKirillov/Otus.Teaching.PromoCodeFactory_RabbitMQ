@@ -38,6 +38,8 @@ services:
     #  interval: 10s
     #  timeout: 5s
     #  retries: 5
+    volumes:
+      - postgres_data1:/var/lib/postgresql/data
     networks:
       - network
 
@@ -74,7 +76,7 @@ services:
     environment: 
       - POSTGRES_PASSWORD=docker
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data2:/var/lib/postgresql/data
     networks:
       - network  
       
@@ -103,7 +105,7 @@ services:
     environment: 
       - POSTGRES_PASSWORD=docker
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data3:/var/lib/postgresql/data
     networks:
       - network
       
@@ -123,8 +125,9 @@ services:
       
 volumes: #Attributes
   rabbitmq_data:
-  postgres_data:
-  
+  postgres_data1:
+  postgres_data2: 
+  postgres_data3:
 #networks:
   # Declare our private network.  We must declare one for the magic
   # Docker DNS to work, but otherwise its default settings are fine.
