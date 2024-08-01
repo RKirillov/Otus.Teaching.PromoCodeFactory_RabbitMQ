@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Otus.Teaching.Pcf.ReceivingFromPartner.Core.Abstractions.Services;
 using Otus.Teaching.Pcf.ReceivingFromPartner.Core;
+using System;
 namespace Otus.Teaching.Pcf.ReceivingFromPartner.Integration.Services
 {
     public class ProducerMessageService : IProducerMessageService
@@ -49,6 +50,7 @@ namespace Otus.Teaching.Pcf.ReceivingFromPartner.Integration.Services
                     exchange: Exchange,//exchange: _exchangeName, - наименование обменника, может быть несколько
                     routingKey: RoutingKey,//маршрутный ключ
                     body: bytes);//содержимое сообщения
+                Console.WriteLine($"Send message");
             }
             return Task.CompletedTask;
         }

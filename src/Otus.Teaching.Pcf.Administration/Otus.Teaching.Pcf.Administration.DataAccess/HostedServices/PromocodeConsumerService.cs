@@ -79,10 +79,10 @@ namespace Otus.Teaching.Pcf.Administration.DataAccess.HostedServices
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-/*            if (!await WaitForAppStartup(_lifetime, stoppingToken))
+            if (!await WaitForAppStartup(_lifetime, stoppingToken))
             {
                 return;
-            }*/
+            }
             var initConsumer = InitConsumer();
             //public event EventHandler<BasicDeliverEventArgs> Received;
             //public delegate void EventHandler<TEventArgs>(object? sender, TEventArgs e);
@@ -101,7 +101,7 @@ namespace Otus.Teaching.Pcf.Administration.DataAccess.HostedServices
                     var message = Encoding.UTF8.GetString(ea.Body.ToArray());
                     var promocodeDto = JsonSerializer.Deserialize<Promocode>(message);
                     await employeeService.UpdateAppliedPromocodes(promocodeDto.PartnerManagerId);
-
+                    Console.WriteLine($"Got message {promocodeDto.PartnerManagerId}");
                     initConsumer.BasicAck(ea.DeliveryTag, false);
                 }
                 ;

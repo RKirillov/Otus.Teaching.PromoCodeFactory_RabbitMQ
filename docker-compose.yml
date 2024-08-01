@@ -5,17 +5,24 @@ services:
     build: src/Otus.Teaching.Pcf.Administration/
     container_name: 'promocode-factory-administration-api'
     #означает, что docker-compose перезапустит контейнер, если тот вдруг остановится (например, программа закончит выполнение штатно или аварийно).
-    #restart: on-failure
+    restart: on-failure
     ports: 
     #"[host:]container[/protocol]"
-      - "8091:80"
+      - "8091:8080"
     environment:
-      - "ConnectionStrings:PromocodeFactoryAdministrationDb=Host=promocode-factory-administration-db;Database=promocode_factory_administration_db;Username=postgres;Password=docker"          
-    #depends_on: 
-    #  promocode-factory-administration-db:
-    #    condition: service_healthy
-    #networks:
-    #  - network
+      - "ConnectionStrings__PromocodeFactoryAdministrationDb=Host=promocode-factory-administration-db;Database=promocode_factory_administration_db;Username=postgres;Password=docker"  
+      - "BusConnectOptions__Username=rmuser"
+      - "BusConnectOptions__Password=docker"
+      - "BusConnectOptions__Host=rabbitmq"
+      - "BusConnectOptions__Port=5672"
+      - "BusConnectOptions__VirtualHost=/"
+      - "ASPNETCORE_ENVIRONMENT__Development"
+
+    depends_on: 
+      - promocode-factory-administration-db
+      - rabbitmq
+    networks:
+      - network
       
   #Administration Db
   promocode-factory-administration-db:
@@ -31,23 +38,31 @@ services:
     #  interval: 10s
     #  timeout: 5s
     #  retries: 5
-    #networks:
-    #  - network
+    networks:
+      - network
+
   #ReceivingFromPartner Api
   promocode-factory-receiving-from-partner-api:
     build: src/Otus.Teaching.Pcf.ReceivingFromPartner/
     container_name: 'promocode-factory-receiving-from-partner-api'
-    #restart: always
+    restart: on-failure
     ports:
-      - "8092:80"
+      - "8092:8080"
     environment:
-      - "ConnectionStrings:PromocodeFactoryReceivingFromPartnerDb=Host=promocode-factory-receiving-from-partner-db;Database=promocode_factory_receiving_from_partner_db;Username=postgres;Password=docker"
-      - "IntegrationSettings:GivingToCustomerApiUrl=http://promocode-factory-giving-to-customer-api"    
-      #- "IntegrationSettings:AdministrationApiUrl=http://promocode-factory-administration-api"       
+      - "ConnectionStrings__PromocodeFactoryReceivingFromPartnerDb=Host=promocode-factory-receiving-from-partner-db;Database=promocode_factory_receiving_from_partner_db;Username=postgres;Password=docker"
+      - "IntegrationSettings:GivingToCustomerApiUrl=http://promocode-factory-giving-to-customer-api:8080" 
+      #- "IntegrationSettings:AdministrationApiUrl=http://promocode-factory-administration-api" 
+      - "BusConnectOptions__Username=rmuser"
+      - "BusConnectOptions__Password=docker"
+      - "BusConnectOptions__Host=rabbitmq"
+      - "BusConnectOptions__Port=5672"
+      - "BusConnectOptions__VirtualHost=/"     
+      - "ASPNETCORE_ENVIRONMENT__Development"      
     depends_on: 
       - promocode-factory-receiving-from-partner-db
-    #networks:
-    #  - network   
+      - rabbitmq
+    networks:
+      - network   
       
   #ReceivingFromPartner Db
   promocode-factory-receiving-from-partner-db:
@@ -60,22 +75,23 @@ services:
       - POSTGRES_PASSWORD=docker
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    #networks:
-    #  - network  
+    networks:
+      - network  
       
   #GivingToCustomer Api
   promocode-factory-giving-to-customer-api:
     build: src/Otus.Teaching.Pcf.GivingToCustomer/
     container_name: 'promocode-factory-giving-to-customer-api'
-    #restart: always
+    restart: on-failure
     ports:
-      - "8093:80"
+      - "8093:8080"
     environment:
-      - "ConnectionStrings:PromocodeFactoryGivingToCustomerDb=Host=promocode-factory-giving-to-customer-db;Database=promocode_factory_giving_to_customer_db;Username=postgres;Password=docker"          
+      - "ConnectionStrings__PromocodeFactoryGivingToCustomerDb=Host=promocode-factory-giving-to-customer-db;Database=promocode_factory_giving_to_customer_db;Username=postgres;Password=docker"     
+      - "ASPNETCORE_ENVIRONMENT__Development"
     depends_on: 
       - promocode-factory-giving-to-customer-db
-    #networks:
-    #  - network      
+    networks:
+      - network      
       
   #GivingToCustomer Db
   promocode-factory-giving-to-customer-db:
@@ -88,8 +104,8 @@ services:
       - POSTGRES_PASSWORD=docker
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    #networks:
-    #  - network
+    networks:
+      - network
       
   rabbitmq:
     image: rabbitmq:3-management
@@ -102,8 +118,8 @@ services:
       RABBITMQ_DEFAULT_PASS: docker  # замените на ваш пароль
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
-    #networks:
-    #  - network
+    networks:
+      - network
       
 volumes: #Attributes
   rabbitmq_data:
@@ -112,8 +128,7 @@ volumes: #Attributes
 #networks:
   # Declare our private network.  We must declare one for the magic
   # Docker DNS to work, but otherwise its default settings are fine.
-  #network: {}  
-#networks:
-#  default:
-#    name: myLocalNetwork # создана извне: docker network create --driver=bridge myLocalNetwork
-#    external: true
+#  network: {}  
+networks:
+  network:
+    driver: bridge
